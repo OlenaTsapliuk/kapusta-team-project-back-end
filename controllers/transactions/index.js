@@ -1,5 +1,7 @@
 const expense = require("./expense");
+const income = require("./income")
 
 module.exports = {
-    expense
+    expense,
+    income
 }

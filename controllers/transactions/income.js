@@ -1,16 +1,16 @@
 const { User, Transaction } = require("../../models");
 const { BadRequest } = require("http-errors");
 
-const expense = async (req, res) => {
+const income = async (req, res) => {
     const { sum, category, income } = req.body
     const { _id } = req.user
     
-    if (income) {
+    if (!income) {
         throw new BadRequest("Wrong transaction type")
     }
 
     const owner = await User.findById(_id)
-    const updatedBalance = owner.balance - Number(sum)
+    const updatedBalance = owner.balance + Number(sum)
     await User.findByIdAndUpdate(_id, { balance: updatedBalance })
 
     const newTransaction = {
@@ -27,6 +27,9 @@ const expense = async (req, res) => {
         code: 201,
         data: { newTransaction }
     })
+
 }
 
-module.exports = expense
+
+
+module.exports = income
