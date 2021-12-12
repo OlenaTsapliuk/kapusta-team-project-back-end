@@ -56,9 +56,14 @@ const joiUserSchema = Joi.object({
   token: Joi.string(),
 });
 
+const joiBalanceSchema = Joi.object({
+  balance: Joi.number().required()
+})
+
 const User = model("user", userSchema);
 
 module.exports = {
   User,
   joiUserSchema,
+  joiBalanceSchema
 };
