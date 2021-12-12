@@ -6,13 +6,15 @@ const {
 } = require("../../middlewares");
 
 const {
-  addCategory
+  addCategory,
+  getAllCategories
 } = require("../../controllers/categories");
 
 const { categoryJoiSchema } = require("../../models/category");
 const router = express.Router();
 
 router.post("/", authenticate, validation(categoryJoiSchema), controllerWrapper(addCategory));
+router.get("/", authenticate, controllerWrapper(getAllCategories));
 
 
 

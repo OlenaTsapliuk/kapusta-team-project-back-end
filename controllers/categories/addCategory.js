@@ -1,14 +1,15 @@
 const { Category } = require("../../models");
-const {Conflict} = require("http-errors")
+const { Conflict } = require("http-errors")
+const BASIC_CATEGORIES = require("./basicCategories")
 
 const addCategory = async (req, res) => {
     const { _id } = req.user
     const { category } = req.body
     
-    const basicCategories = ["Продукты", "Транспорт", "Здоровье", "Алкоголь", "Развлечения", "Всё для дома", "Техника", "Коммуналка, связь", "Спорт, хобби", "Образование", "Прочие"]
+    
     const doseCategoryExists = await Category.findOne({ category, owner: _id })
     
-    if (doseCategoryExists || basicCategories.includes(category)) {
+    if (doseCategoryExists || BASIC_CATEGORIES.includes(category)) {
         throw new Conflict("Category alrady exists")
     }
 
