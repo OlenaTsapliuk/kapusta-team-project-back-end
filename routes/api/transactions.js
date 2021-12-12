@@ -8,7 +8,8 @@ const {
 const {
   expense,
   income,
-  deleteTransaction
+  deleteTransaction,
+  getMonthlyIncome
 } = require("../../controllers/transactions");
 
 const { transactionJoiSchema } = require("../../models/transaction");
@@ -17,6 +18,8 @@ const router = express.Router();
 router.post("/expense", authenticate, validation(transactionJoiSchema), controllerWrapper(expense));
 router.post("/income", authenticate, validation(transactionJoiSchema), controllerWrapper(income));
 router.delete("/:transactionId", authenticate, controllerWrapper(deleteTransaction));
+
+router.get("/income/:date", authenticate, controllerWrapper(getMonthlyIncome));
 
 
 module.exports = router;
