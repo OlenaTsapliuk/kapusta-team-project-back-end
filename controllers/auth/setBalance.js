@@ -5,9 +5,9 @@ const setBalance = async (req, res) => {
     const { _id } = req.user;
 
   await User.findByIdAndUpdate(_id, { balance });
-  res.status(204).json({
+  res.status(201).json({
     status: "success",
-    code: 204,
+    code: 201,
     message: `User balance set as ${balance} value`,
   });
 }
