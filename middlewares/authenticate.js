@@ -4,7 +4,6 @@ const { User } = require("../models");
 
 const { SECRET_KEY = "jghdfggfhgg" } = process.env;
 
-
 const authenticate = async (req, res, next) => {
   try {
     if (!req.headers.authorization) {
