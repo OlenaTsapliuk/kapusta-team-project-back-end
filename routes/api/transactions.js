@@ -9,7 +9,8 @@ const {
   expense,
   income,
   deleteTransaction,
-  getMonthlyIncome
+  getMonthlyIncome,
+  getMonthlyExpense
 } = require("../../controllers/transactions");
 
 const { transactionJoiSchema } = require("../../models/transaction");
@@ -20,6 +21,7 @@ router.post("/income", authenticate, validation(transactionJoiSchema), controlle
 router.delete("/:transactionId", authenticate, controllerWrapper(deleteTransaction));
 
 router.get("/income/:date", authenticate, controllerWrapper(getMonthlyIncome));
+router.get("/expense/:date", authenticate, controllerWrapper(getMonthlyExpense));
 
 
 module.exports = router;
