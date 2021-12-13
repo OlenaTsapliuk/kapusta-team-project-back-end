@@ -9,7 +9,7 @@ const getAllCategories = async (req, res) => {
     res.json({
         status: 'sucsess',
         code: 201,
-        data: { ...basicCategories, ...userCategories  }
+        data: [ ...basicCategories, ...userCategories  ]
     })
 
 }
