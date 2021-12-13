@@ -15,9 +15,10 @@ const { categoryJoiSchema } = require("../../models/category");
 const router = express.Router();
 
 router.post("/", authenticate, validation(categoryJoiSchema), controllerWrapper(addCategory));
-router.get("/", authenticate, controllerWrapper(getAllCategories));
-router.delete("/:categoryId", authenticate, controllerWrapper(deleteCategory));
 
+router.get("/", authenticate, controllerWrapper(getAllCategories));
+
+router.delete("/:categoryId", authenticate, controllerWrapper(deleteCategory));
 
 
 module.exports = router;

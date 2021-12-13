@@ -10,11 +10,14 @@ const getMonthlyIncome = async (req, res) => {
     if (!correctMonthFormat || !correctYearFormat) {
         throw new BadRequest('Invalid date format. Correct format is MM-YYYY')
     }
+    const monthsShortNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", " Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
-    const transactions = await Transaction.find({ owner: _id, income: true})
+    const transactions = await Transaction.find({ owner: _id, income: true })
     const currentMonthTransactions = transactions.filter(t => {
-        const dateToString = `${t.createdAt}`
-        const transactionDate = `${dateToString.split(" ")[2]}-${dateToString.split(" ")[3]}`
+        const month = t.createdAt.toString().split(" ")[1]
+        const year = t.createdAt.toString().split(" ")[3]
+        const transactionDate = `${monthsShortNames.indexOf(month) + 1}-${year}`
+
         if (date === transactionDate) {
             return t
         }
@@ -23,7 +26,7 @@ const getMonthlyIncome = async (req, res) => {
     res.json({
         status: 'sucsess',
       code: 200,
-      data: { currentMonthTransactions }
+      data: currentMonthTransactions
     })
 }
 

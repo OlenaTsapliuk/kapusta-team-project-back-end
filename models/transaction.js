@@ -8,6 +8,10 @@ const transactionSchema = Schema(
       type: Number,
       required: [true, "Sum is required"]
     },
+    transactionName: {
+      type: String,
+      required: [true, "Transaction name is required"],
+    },
     owner: {
       type: String,
       required: [true, "Owner is required"],
@@ -28,6 +32,7 @@ const transactionJoiSchema = Joi.object({
   sum: Joi.number().required(),
   income: Joi.boolean().required(),
   category: Joi.string().required(),
+  transactionName: Joi.string().required()
 });
 
 const Transaction = model("transaction", transactionSchema);
