@@ -13,6 +13,7 @@ const {
   resendingVerify,
   setBalance,
   googleLogin,
+  googleRedirect,
 } = require("../../controllers/auth");
 
 const { joiUserSchema, joiBalanceSchema } = require("../../models/user");
@@ -31,6 +32,7 @@ router.post(
   authenticate,
   controllerWrapper(setBalance)
 );
-router.post("/googlelogin", controllerWrapper(googleLogin));
+router.get("/google", controllerWrapper(googleLogin));
+router.get("/google-redirect", controllerWrapper(googleRedirect));
 
 module.exports = router;
