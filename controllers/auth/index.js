@@ -5,6 +5,7 @@ const verify = require("./verify");
 const resendingVerify = require("./resendingVerify");
 const setBalance = require("./setBalance");
 const googleLogin = require("./googleLogin");
+const googleRedirect = require("./googleRedirect");
 
 module.exports = {
   signup,
@@ -14,4 +15,5 @@ module.exports = {
   resendingVerify,
   setBalance,
   googleLogin,
+  googleRedirect,
 };
