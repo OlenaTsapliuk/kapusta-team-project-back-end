@@ -11,7 +11,8 @@ const {
   logout,
   verify,
   resendingVerify,
-  setBalance
+  setBalance,
+  googleLogin,
 } = require("../../controllers/auth");
 
 const { joiUserSchema, joiBalanceSchema } = require("../../models/user");
@@ -24,6 +25,12 @@ router.post("/logout", authenticate, controllerWrapper(logout));
 router.get("/verify/:verificationToken", controllerWrapper(verify));
 router.post("/verify/", controllerWrapper(resendingVerify));
 
-router.post("/setBalance", validation(joiBalanceSchema), authenticate, controllerWrapper(setBalance))
+router.post(
+  "/setBalance",
+  validation(joiBalanceSchema),
+  authenticate,
+  controllerWrapper(setBalance)
+);
+router.post("/googlelogin", controllerWrapper(googleLogin));
 
 module.exports = router;
