@@ -2,7 +2,7 @@ const { User, Transaction } = require("../../models");
 const { BadRequest } = require("http-errors");
 
 const income = async (req, res) => {
-    const { sum, category, income } = req.body
+    const { sum, category, income, transactionName } = req.body
     const { _id } = req.user
     
     if (!income) {
@@ -12,20 +12,20 @@ const income = async (req, res) => {
     const owner = await User.findById(_id)
     const updatedBalance = owner.balance + Number(sum)
     await User.findByIdAndUpdate(_id, { balance: updatedBalance })
-
-    const newTransaction = {
+    
+    const newTransaction = await Transaction.create({
         sum,
+        transactionName,
         category,
         income,
         owner: _id
-    }
-    
-    await Transaction.create(newTransaction)
+    })
 
     res.status(201).json({
         status: 'sucsess',
         code: 201,
-        data: { newTransaction }
+        data: newTransaction,
+        balance: updatedBalance
     })
 
 }
