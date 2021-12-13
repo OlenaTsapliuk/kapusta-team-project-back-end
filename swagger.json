@@ -1,0 +1,41 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "version": "1.0.0",
+    "title": "Kapusta-team-project",
+    "description": "API for tracking income and expenses",
+    "contact": {
+      "email": "tsaplyk_olena@ukr.net"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "servers": [
+    {
+      "url": "http://localhost:4000/",
+      "description": "Test server"
+    },
+    {
+      "url": "https://kapusta-app.herokuapp.com/",
+      "description": "Prod server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Authorization",
+      "description": "Authorization endpoints"
+    },
+    {
+      "name": "Transaction",
+      "description": "Transaction endpoints"
+    },
+    {
+      "name": "Category",
+      "description": "Categories endpoints"
+    }
+  ]
+}
