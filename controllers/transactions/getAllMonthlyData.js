@@ -4,11 +4,11 @@ const {BadRequest} = require("http-errors")
 const getAllMonthlyData = async (req, res) => {
     const { _id } = req.user
     const { date } = req.params
-    const correctMonthFormat = date.split("-")[0].length === 2
+    const correctMonthFormat = date.split("-")[0].length === 2 || date.split("-")[0].length === 1
     const correctYearFormat = date.split("-")[1].length === 4
    
     if (!correctMonthFormat || !correctYearFormat) {
-        throw new BadRequest('Invalid date format. Correct format is MM-YYYY')
+        throw new BadRequest('Invalid date format.')
     }
       const monthsShortNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", " Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
@@ -42,69 +42,62 @@ const getAllMonthlyData = async (req, res) => {
         }
     })
 
-    const allIncomeUnicTransactionNames = []
-     allIncomeTransactions.forEach(t => {
-        if (!allIncomeUnicTransactionNames.includes(t.transactionName)) {
-            allIncomeUnicTransactionNames.push(t.transactionName)
-        }
-     })
-    
-    const allExpenseUnicTransactionNames = []
-     allExpenseTransactions.forEach(t => {
-        if (!allExpenseUnicTransactionNames.includes(t.transactionName)) {
-            allExpenseUnicTransactionNames.push(t.transactionName)
-        }
-     })
-    
-
-    const income = []
+    const incomes = []
     allIncomeUnicCategories.forEach(cat => {
-        income.push({
+        incomes.push({
             category: cat,
             totalSum: 0,
             transactions: []
         })
+        
         allIncomeTransactions.forEach(transaction => {
             if (transaction.category === cat) {
-                const obj = income.find(c => c.category === cat)
+                const obj = incomes.find(c => c.category === cat)
                 obj.totalSum += transaction.sum
-                // obj.transactions.push({
-                //     transactionName: 'transaction.transactionName',
-                //     transactionTotalSum: 'transaction.sum'
-                // })
-                // allIncomeUnicTransactionNames.forEach(name => {
-                //     if (name === transaction.transactionName) {
-                //         obj.transactions.push({
-                //             transactionName: name,
-                //             transactionTotalSum: 0
-                //         })
-                //     }
-                // })
+                const isNameInList = obj.transactions.find( i => i.transactionName === transaction.transactionName)
+                if (!isNameInList) {
+                    obj.transactions.push({
+                        transactionName: transaction.transactionName,
+                        transactionTotalSum: transaction.sum
+                    })
+                    return
+                }
+                isNameInList.transactionTotalSum += transaction.sum
             }
         })
+        
     })
 
-    const expense = [] 
+    const expenses = [] 
     allExpenseUnicCategories.forEach(cat => {
-        expense.push({
+        const transactions = []
+        expenses.push({
             category: cat,
             totalSum: 0,
-            transactions: []
+            transactions
         })
-         allExpenseTransactions.forEach(transaction => {
+        allExpenseTransactions.forEach(transaction => {
             if (transaction.category === cat) {
-                const obj = expense.find(c => c.category === cat)
+                const obj = expenses.find(c => c.category === cat)
                 obj.totalSum += transaction.sum
-            }
+                const isNameInList = obj.transactions.find( i => i.transactionName === transaction.transactionName)
+                if (!isNameInList) {
+                    obj.transactions.push({
+                        transactionName: transaction.transactionName,
+                        transactionTotalSum: transaction.sum
+                    })
+                    return
+                }
+                isNameInList.transactionTotalSum += transaction.sum
+                }
         })
-    })
-
+})
 
     const result = {
         allIncomes,
         allExpenses,
-        income,
-        expense
+        incomes,
+        expenses
     }
 
     res.json({
