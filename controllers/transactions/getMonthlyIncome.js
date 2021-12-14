@@ -4,11 +4,11 @@ const {BadRequest} = require("http-errors")
 const getMonthlyIncome = async (req, res) => {
     const { _id } = req.user
     const { date } = req.params
-    const correctMonthFormat = date.split("-")[0].length === 2
+    const correctMonthFormat = date.split("-")[0].length === 2 || date.split("-")[0].length === 1
     const correctYearFormat = date.split("-")[1].length === 4
    
     if (!correctMonthFormat || !correctYearFormat) {
-        throw new BadRequest('Invalid date format. Correct format is MM-YYYY')
+        throw new BadRequest('Invalid date format.')
     }
     const monthsShortNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", " Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
@@ -17,6 +17,9 @@ const getMonthlyIncome = async (req, res) => {
         const month = t.createdAt.toString().split(" ")[1]
         const year = t.createdAt.toString().split(" ")[3]
         const transactionDate = `${monthsShortNames.indexOf(month) + 1}-${year}`
+
+        console.log(date)
+        console.log(transactionDate)
 
         if (date === transactionDate) {
             return t
