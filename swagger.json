@@ -16,12 +16,12 @@
   "produces": ["application/json"],
   "servers": [
     {
-      "url": "http://localhost:4000/",
+      "url": "http://localhost:3001/",
       "description": "Test server"
     },
     {
-      "url": "https://kapusta-app.herokuapp.com/",
-      "description": "Prod server"
+      "url": "https://kapusta-team-project-back-end.herokuapp.com/",
+      "description": "Production server"
     }
   ],
   "tags": [
@@ -37,5 +37,69 @@
       "name": "Category",
       "description": "Categories endpoints"
     }
-  ]
+  ],
+  "paths": {
+    "/api/users/signup": {
+      "post": {
+        "tags": ["Authorization"],
+        "summary": "User registration",
+        "parameters": [],
+        "requestBody": {
+          "description": "Registration's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignupRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully registered. Please verify your email!!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignupResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Already registered",
+            "content": {}
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "SignupRequest": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "User's email",
+            "example": ["user@ukr.net", "user@gmail.com"]
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "minlength 6 symbols!"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
 }
