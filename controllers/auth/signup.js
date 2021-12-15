@@ -27,6 +27,10 @@ const signup = async (req, res) => {
     status: "success",
     code: 201,
     message: "Register success",
+    user: {
+      email,
+      password,
+    },
   });
 };
 module.exports = signup;
