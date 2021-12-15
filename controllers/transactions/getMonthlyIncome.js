@@ -18,9 +18,6 @@ const getMonthlyIncome = async (req, res) => {
         const year = t.createdAt.toString().split(" ")[3]
         const transactionDate = `${monthsShortNames.indexOf(month) + 1}-${year}`
 
-        console.log(date)
-        console.log(transactionDate)
-
         if (date === transactionDate) {
             return t
         }

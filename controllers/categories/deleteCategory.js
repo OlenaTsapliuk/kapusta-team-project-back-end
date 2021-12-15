@@ -12,10 +12,9 @@ const deleteCategory = async (req, res) => {
     }
     
     res.json({
-        status: 'sucsess',
-        code: 201,
-        message: `Category ${categoryId} was deleted`,
-        data: {category}
+        status: `Category ${categoryId} was deleted`,
+        code: 200,
+        data: category
     })
 
 }
