@@ -264,8 +264,8 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "Successful login",
+          "204": {
+            "description": "Successful log out",
             "content": {
               "application/json": {
                 "schema": {
@@ -699,16 +699,21 @@
             "description": "Success message",
             "example": "Register success"
           },
-          "email": {
-            "type": "string",
-            "format": "email",
-            "description": "User's email",
-            "example": "user@ukr.net"
-          },
-          "password": {
-            "type": "string",
-            "description": "User's password",
-            "example": "qwerty123"
+          "user": {
+            "type": "object",
+            "properties": {
+              "email": {
+                "type": "string",
+                "format": "email",
+                "description": "User's email",
+                "example": "user@ukr.net"
+              },
+              "password": {
+                "type": "string",
+                "description": "User's password",
+                "example": "qwerty123"
+              }
+            }
           }
         }
       },
@@ -857,27 +862,37 @@
             "description": "Success message",
             "example": "Login success"
           },
-          "token": {
-            "type": "string",
-            "description": "User's token",
-            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxYjhiNjQ2MDFmNDA2YTg5NWYxNzYyNyIsImlhdCI6MTYzOTQ5NjI1MCwiZXhwIjoxNjM5NDk5ODUwfQ._cwnVML85O4Y-rGio-ghDJcg2H7t_C3Uxb40b24HmyU"
-          },
-          "email": {
-            "type": "string",
-            "format": "email",
-            "description": "User's email",
-            "example": "user@ukr.net"
-          },
-          "id": {
-            "type": "string",
-            "description": "User's id",
-            "example": "61b8b64601f406a895f17627"
-          },
-          "balance": {
-            "type": "integer",
-            "format": "int32",
-            "description": "User's balance (default balance:0)",
-            "example": "0"
+          "data": {
+            "type": "object",
+            "properties": {
+              "token": {
+                "type": "string",
+                "description": "User's token",
+                "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxYjhiNjQ2MDFmNDA2YTg5NWYxNzYyNyIsImlhdCI6MTYzOTQ5NjI1MCwiZXhwIjoxNjM5NDk5ODUwfQ._cwnVML85O4Y-rGio-ghDJcg2H7t_C3Uxb40b24HmyU"
+              },
+              "user": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "description": "User's email",
+                    "example": "user@ukr.net"
+                  },
+                  "id": {
+                    "type": "string",
+                    "description": "User's id",
+                    "example": "61b8b64601f406a895f17627"
+                  },
+                  "balance": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "User's balance (default balance:0)",
+                    "example": "0"
+                  }
+                }
+              }
+            }
           }
         }
       },
