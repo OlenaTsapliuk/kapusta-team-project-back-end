@@ -18,7 +18,7 @@ const addCategory = async (req, res) => {
     res.status(201).json({
         status: 'sucsess',
         code: 201,
-        data: { newCategory }
+        data: newCategory 
     })
 
 }

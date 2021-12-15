@@ -16,7 +16,7 @@ const router = express.Router();
 
 router.post("/", authenticate, validation(categoryJoiSchema), controllerWrapper(addCategory));
 
-router.get("/", authenticate, controllerWrapper(getAllCategories));
+router.get("/getAll", authenticate, controllerWrapper(getAllCategories));
 
 router.delete("/:categoryId", authenticate, controllerWrapper(deleteCategory));
 

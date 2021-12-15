@@ -72,6 +72,332 @@
           }
         }
       }
+    },
+    "/api/users/setBalance": {
+      "post": {
+        "tags": ["Authorization"],
+        "summary": "Set user balance after first signin",
+        "parameters": [],
+        "security": [{"Bearer": []}],
+        "requestBody": {
+          "description": "Balance",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetBalanceRquest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful balance setting"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+     "/api/transactions/expense": {
+      "post": {
+        "tags": ["Transaction"],
+        "summary": "Save user expense transaction",
+        "parameters": [],
+        "security": [{"Bearer": []}],
+        "requestBody": {
+          "description": "Transaction data",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransactionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful transaction",
+            "content": {
+              "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransactionResponse"
+              }
+            }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+     "/api/transactions/income": {
+      "post": {
+        "tags": ["Transaction"],
+        "summary": "Save user income transaction",
+        "parameters": [],
+        "security": [{"Bearer": []}],
+        "requestBody": {
+          "description": "Transaction data",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransactionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful transaction",
+            "content": {
+              "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransactionResponse"
+              }
+            }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/transactions/{:transactionId}": {
+      "delete": {
+        "tags": ["Transaction"],
+        "summary": "Remove transaction",
+        "parameters": [{
+          "in":"path",
+          "name": ":transactionId",
+          "required": true,
+          "type": "string",
+          "description": "Trasaction id"
+        }],
+        "security": [{"Bearer": []}],
+        "responses": {
+          "200": {
+            "description": "Transaction deleted"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Transaction not found"
+          }
+        }
+      }
+    },
+    "/api/transactions/income/{:date}": {
+      "get": {
+        "tags": ["Transaction"],
+        "summary": "Get all income transactions for requested month",
+        "parameters": [{
+          "in":"path",
+          "name": ":date",
+          "required": true,
+          "type": "string",
+          "description": "Date in format M-YYYY, or MM-YYYY"
+        }],
+        "security": [{"Bearer": []}],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MonthlyIncomeTransactionsResponse"
+              }
+            }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/transactions/expense/{:date}": {
+      "get": {
+        "tags": ["Transaction"],
+        "summary": "Get all expense transactions for requested month",
+        "parameters": [{
+          "in":"path",
+          "name": ":date",
+          "required": true,
+          "type": "string",
+          "description": "Date in format M-YYYY, or MM-YYYY"
+        }],
+        "security": [{"Bearer": []}],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MonthlyExpenseTransactionsResponse"
+              }
+            }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/transactions/{:date}": {
+      "get": {
+        "tags": ["Transaction"],
+        "summary": "Get all transaction data for requested month",
+        "parameters": [{
+          "in":"path",
+          "name": ":date",
+          "required": true,
+          "type": "string",
+          "description": "Date in format M-YYYY, or MM-YYYY"
+        }],
+        "security": [{"Bearer": []}],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MonthlyTransactionsResponse"
+              }
+            }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/categories/": {
+      "post": {
+        "tags": ["Category"],
+        "summary": "Set new custom category",
+        "parameters": [],
+        "security": [{"Bearer": []}],
+        "requestBody": {
+          "description": "Category",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetCategoryRquest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CategoryResponse"
+              }
+            }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "409": {
+            "description": "Category alrady exists"
+          }
+        }
+      }
+    },
+    "/api/categories/{:categoryId}": {
+      "delete": {
+        "tags": ["Category"],
+        "summary": "Set new custom category",
+        "parameters": [{
+          "in":"path",
+          "name": ":categoryId",
+          "required": true,
+          "type": "string",
+          "description": "Id of category"
+        }],
+        "security": [{"Bearer": []}],
+        "responses": {
+          "200": {
+            "description": "Category was deleted",
+            "content": {
+              "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CategoryResponse"
+              }
+            }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Category not found"
+          }
+        }
+      }
+    },
+    "/api/categories/getAll": {
+      "get": {
+        "tags": ["Category"],
+        "summary": "Get all users actegories includes basic",
+        "parameters": [],
+        "security": [{"Bearer": []}],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetAllCategoryResponse"
+              }
+            }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -92,7 +418,583 @@
             "example": "minlength 6 symbols!"
           }
         }
+      },
+      "SetBalanceRquest": {
+        "type": "object",
+        "required": ["balance"],
+        "properties": {
+          "balance": {
+            "type": "number",
+            "description": "User's initial balance",
+            "example": 10000
+          }
+        }
+      },
+      "TransactionRequest": {
+        "type": "object",
+        "required": ["sum", "transactionName", "income", "category"],
+        "properties": {
+          "sum": {
+            "type": "number",
+            "description": "Transaction sum",
+            "example": 100
+          },
+          "transactionName": {
+            "type": "string",
+            "description": "Transaction name",
+            "example": "Свинина"
+          },
+           "category": {
+            "type": "string",
+            "description": "Transaction category",
+            "example": "Продукты"
+          },
+          "income": {
+            "type": "boolean",
+            "description": "If it is expense must - be false, if it is income - must true",
+            "example": false
+          }
+        }
+      },
+      "TransactionResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Transaction status",
+            "example": "sucsess"
+          },
+          "code": {
+            "type": "number",
+            "description": "Transaction status code",
+            "example": 201
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+          "sum": {
+            "type": "number",
+            "description": "Transaction sum",
+            "example": 100
+          },
+          "transactionName": {
+            "type": "string",
+            "description": "Transaction name",
+            "example": "Свинина"
+          },
+           "category": {
+            "type": "string",
+            "description": "Transaction category",
+            "example": "Продукты"
+          },
+          "income": {
+            "type": "boolean",
+            "description": "If it is expense must - be false, if it is income - must true",
+            "example": false
+          },
+          "owner": {
+            "type": "string",
+            "description": "Id of transaction owner",
+            "example": "61b5c26b96ca9515048ae6eb"
+          },
+          "_id": {
+            "type": "string",
+            "description": "Id of transaction",
+            "example": "61b9ceb088f0b2ad3107e195"
+          },
+          "createdAt": {
+            "type": "date",
+            "description": "Transaction creation date",
+            "example": "2021-12-15T11:17:04.785Z"
+          },
+          "updatedAt": {
+            "type": "date",
+            "description": "Transaction update date",
+            "example": "2021-12-15T11:17:04.785Z"
+          }
+        }
+          },
+          "balance":{
+            "type": "number",
+            "description": "User balance after success transaction",
+            "example": 100000
+          }
+          
+        }
+      },
+       "MonthlyIncomeTransactionsResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Transaction status",
+            "example": "sucsess"
+          },
+          "code": {
+            "type": "number",
+            "description": "Transaction status code",
+            "example": 201
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+          "sum": {
+            "type": "number",
+            "description": "Transaction sum",
+            "example": 100
+          },
+          "transactionName": {
+            "type": "string",
+            "description": "Transaction name",
+            "example": "Свинина"
+          },
+           "category": {
+            "type": "string",
+            "description": "Transaction category",
+            "example": "Продукты"
+          },
+          "income": {
+            "type": "boolean",
+            "description": "If it is expense must - be false, if it is income - must true",
+            "example": false
+          },
+          "owner": {
+            "type": "string",
+            "description": "Id of transaction owner",
+            "example": "61b5c26b96ca9515048ae6eb"
+          },
+          "_id": {
+            "type": "string",
+            "description": "Id of transaction",
+            "example": "61b9ceb088f0b2ad3107e195"
+          },
+          "createdAt": {
+            "type": "date",
+            "description": "Transaction creation date",
+            "example": "2021-12-15T11:17:04.785Z"
+          },
+          "updatedAt": {
+            "type": "date",
+            "description": "Transaction update date",
+            "example": "2021-12-15T11:17:04.785Z"
+          }
+        }
+            },
+            "example": [{
+              "_id": "61b7426c4311bf9645a85522",
+            "sum": 10000,
+            "transactionName": "За декабрь",
+            "owner": "61b5c26b96ca9515048ae6eb",
+            "income": true,
+            "category": "Зарплата",
+            "createdAt": "2021-12-13T12:54:04.851Z",
+            "updatedAt": "2021-12-13T12:54:04.851Z"
+            },
+            {
+              "_id": "61b744d5775e72dc9d15518c",
+            "sum": 10000,
+            "transactionName": "За март",
+            "owner": "61b5c26b96ca9515048ae6eb",
+            "income": true,
+            "category": "Зарплата",
+            "createdAt": "2021-12-13T13:04:21.761Z",
+            "updatedAt": "2021-12-13T13:04:21.761Z"
+            }]
+            
+          }
+        }
+      },
+      "MonthlyExpenseTransactionsResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Transaction status",
+            "example": "sucsess"
+          },
+          "code": {
+            "type": "number",
+            "description": "Transaction status code",
+            "example": 201
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+          "sum": {
+            "type": "number",
+            "description": "Transaction sum",
+            "example": 100
+          },
+          "transactionName": {
+            "type": "string",
+            "description": "Transaction name",
+            "example": "Свинина"
+          },
+           "category": {
+            "type": "string",
+            "description": "Transaction category",
+            "example": "Продукты"
+          },
+          "income": {
+            "type": "boolean",
+            "description": "If it is expense must - be false, if it is income - must true",
+            "example": false
+          },
+          "owner": {
+            "type": "string",
+            "description": "Id of transaction owner",
+            "example": "61b5c26b96ca9515048ae6eb"
+          },
+          "_id": {
+            "type": "string",
+            "description": "Id of transaction",
+            "example": "61b9ceb088f0b2ad3107e195"
+          },
+          "createdAt": {
+            "type": "date",
+            "description": "Transaction creation date",
+            "example": "2021-12-15T11:17:04.785Z"
+          },
+          "updatedAt": {
+            "type": "date",
+            "description": "Transaction update date",
+            "example": "2021-12-15T11:17:04.785Z"
+          }
+        }
+            },
+            "example": [{
+              "_id": "61b742094311bf9645a85503",
+            "sum": 100,
+            "transactionName": "Свинина",
+            "owner": "61b5c26b96ca9515048ae6eb",
+            "income": false,
+            "category": "Продукты",
+            "createdAt": "2021-12-13T12:52:25.500Z",
+            "updatedAt": "2021-12-13T12:52:25.500Z"
+            },
+            {
+              "_id": "61b742274311bf9645a8550d",
+            "sum": 100,
+            "transactionName": "Говядина",
+            "owner": "61b5c26b96ca9515048ae6eb",
+            "income": false,
+            "category": "Продукты",
+            "createdAt": "2021-12-13T12:52:55.099Z",
+            "updatedAt": "2021-12-13T12:52:55.099Z"
+            }]
+            
+          }
+        }
+      },
+      "MonthlyTransactionsResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Transaction status",
+            "example": "sucsess"
+          },
+          "code": {
+            "type": "number",
+            "description": "Transaction status code",
+            "example": 201
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "allIncomes": {
+                "type": "number",
+                "description": "Sum of all incomes for requested month",
+                "example": 55000
+              },
+              "allExpenses": {
+                "type": "number",
+                "description": "Sum of all expenses for requested month",
+                "example": 4255
+              },
+              "incomes": {
+                "type": "array",
+                "items":{
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                        "type": "string",
+                        "description": "Transaction category",
+                        "example": "Зарплата"
+                  },
+                  "totalSum": {
+                    "type": "number",
+                    "description": "The total amount of funds received on this category for requested month",
+                    "example": 50000
+                  },
+                  "transactions": {
+                    "type": "array",
+                    "items":{
+                      "type": "object",
+                      "properties": {
+                        "transactionName": {
+                          "type": "string",
+                          "description": "Transaction name",
+                          "example": "За декабрь"
+                        },
+                        "totalSum": {
+                          "type": "number",
+                          "description": "The total amount of funds received on this transaction name for requested month",
+                          "example": 50000
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "example": [
+            {
+                "category": "Зарплата",
+                "totalSum": 5000,
+                "transactions": [
+                    {
+                        "transactionName": "За декабрь",
+                        "transactionTotalSum": 50000
+                    }
+                ]
+            },
+            {
+                "category": "Прочие доходы",
+                "totalSum": 5000,
+                "transactions": [
+                    {
+                        "transactionName": "Премия",
+                        "transactionTotalSum": 5000
+                    }
+                ]
+            }
+        ]
+            },
+            "expenses": {
+                "type": "array",
+                "items":{
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                        "type": "string",
+                        "description": "Transaction category",
+                        "example": "Продукты"
+                  },
+                  "totalSum": {
+                    "type": "number",
+                    "description": "Total expenses spent on this category for requested month",
+                    "example": 5500
+                  },
+                  "transactions": {
+                    "type": "array",
+                    "items":{
+                      "type": "object",
+                      "properties": {
+                        "transactionName": {
+                          "type": "string",
+                          "description": "Transaction name",
+                          "example": "Свинина"
+                        },
+                        "totalSum": {
+                          "type": "number",
+                          "description": "Total expenses spent on this transaction name for requested month",
+                          "example": 370
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "example": [
+            {
+                "category": "Продукты",
+                "totalSum": 3255,
+                "transactions": [
+                    {
+                        "transactionName": "Свинина",
+                        "transactionTotalSum": 2000
+                    },
+                    {
+                        "transactionName": "Говядина",
+                        "transactionTotalSum": 800
+                    },
+                    {
+                        "transactionName": "Курятина",
+                        "transactionTotalSum": 555
+                    }
+                ]
+            },
+            {
+                "category": "Счета",
+                "totalSum": 1000,
+                "transactions": [
+                    {
+                        "transactionName": "Электричество",
+                        "transactionTotalSum": 1000
+                    }
+                ]
+            }
+        ]
+            }
+          }
+        }
       }
+    },
+    "SetCategoryRquest": {
+      "type": "object",
+        "required": ["category", "income"],
+        "properties": {
+           "category": {
+            "type": "string",
+            "description": "Transaction category",
+            "example": "Премия"
+          },
+          "income": {
+            "type": "boolean",
+            "description": "If it is expense must - be false, if it is income - must true",
+            "example": true
+          }
+        }
+    },
+    "CategoryResponse": {
+      "type": "object",
+      "properties": {
+        "status":{
+          "type": "string",
+          "description": "Response status",
+          "example": "success"
+        },
+        "code":{
+          "type": "number",
+          "description": "Response status code",
+          "example": 201
+        },
+        "data":{
+          "type":"object",
+          "properties":{
+            "category": {
+            "type": "string",
+            "description": "Transaction category",
+            "example": "Премия"
+          },
+          "income": {
+            "type": "boolean",
+            "description": "If it is expense must - be false, if it is income - must true",
+            "example": true
+          },
+          "basicCategory":{
+            "type": "boolean",
+            "description": "If it is basic category - false, if it is custom - true",
+            "example": false
+          },
+          "owner": {
+            "type": "string",
+            "description": "Id of category owner",
+            "example": "61b5c26b96ca9515048ae6eb"
+          },
+          "_id": {
+            "type": "string",
+            "description": "Id of category",
+            "example": "61b9ceb088f0b2ad3107e195"
+          },
+          "createdAt": {
+            "type": "date",
+            "description": "Category creation date",
+            "example": "2021-12-15T11:17:04.785Z"
+          },
+          "updatedAt": {
+            "type": "date",
+            "description": "Category update date",
+            "example": "2021-12-15T11:17:04.785Z"
+          }
+          }
+        }
+
+      }
+      
+    },
+    "GetAllCategoryResponse": {
+      "type": "object",
+      "properties": {
+        "status":{
+          "type": "string",
+          "description": "Response status",
+          "example": "success"
+        },
+        "code":{
+          "type": "number",
+          "description": "Response status code",
+          "example": 201
+        },
+        "data":{
+          "type":"array",
+          "items": {
+            "type": "object",
+            "properties":{
+            "category": {
+            "type": "string",
+            "description": "Transaction category",
+            "example": "Премия"
+          },
+          "income": {
+            "type": "boolean",
+            "description": "If it is expense must - be false, if it is income - must true",
+            "example": true
+          },
+          "basicCategory":{
+            "type": "boolean",
+            "description": "If it is basic category - false, if it is custom - true",
+            "example": false
+          },
+          "owner": {
+            "type": "string",
+            "description": "Id of category owner. This field may not be available if the category is basic",
+            "example": "61b5c26b96ca9515048ae6eb"
+          },
+          "_id": {
+            "type": "string",
+            "description": "Id of category",
+            "example": "61b9ceb088f0b2ad3107e195"
+          },
+          "createdAt": {
+            "type": "date",
+            "description": "Category creation date",
+            "example": "2021-12-15T11:17:04.785Z"
+          },
+          "updatedAt": {
+            "type": "date",
+            "description": "Category update date",
+            "example": "2021-12-15T11:17:04.785Z"
+          }
+          }
+          },
+          "example": [
+            {
+               "_id": "61b60d76c9aee519a92c8dc9",
+            "category": "Прочие",
+            "income": false,
+            "basicCategory": true,
+            "createdAt": "2021-12-12T14:55:50.956Z",
+            "updatedAt": "2021-12-12T14:55:50.956Z"
+            }, 
+            {
+              "_id": "61b9fd354b7c1a068a6b7dad",
+            "category": "Премия",
+            "income": true,
+            "basicCategory": false,
+            "owner": "61b5c26b96ca9515048ae6eb",
+            "createdAt": "2021-12-15T14:35:33.202Z",
+            "updatedAt": "2021-12-15T14:35:33.202Z"
+            }
+        ]
+        }
+
+      }
+    }
     },
     "securitySchemes": {
       "Bearer": {
