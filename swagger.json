@@ -1362,6 +1362,11 @@
             "type": "boolean",
             "description": "If it is expense must - be false, if it is income - must true",
             "example": true
+          },
+          "iconName": {
+            "type": "string",
+            "description": "Icon name from svg-sprite",
+            "example": "produkty"
           }
         }
       },
@@ -1395,6 +1400,11 @@
                 "type": "boolean",
                 "description": "If it is basic category - false, if it is custom - true",
                 "example": false
+              },
+              "iconName": {
+                "type": "string",
+                "description": "Icon name from svg-sprite",
+                "example": "premiya"
               },
               "owner": {
                 "type": "string",

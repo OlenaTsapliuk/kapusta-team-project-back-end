@@ -17,6 +17,9 @@ const categorySchema = Schema({
   },
   owner: {
     type: String
+  },
+  iconName: {
+    type: String
   }
   
 }, { versionKey: false, timestamps: true });
@@ -24,6 +27,8 @@ const categorySchema = Schema({
 const categoryJoiSchema = Joi.object({
   category: Joi.string().required(),
   income: Joi.boolean().required(),
+  basicCategory: Joi.boolean(),
+  iconName: Joi.string()
 });
 
 const Category = model("category", categorySchema);
