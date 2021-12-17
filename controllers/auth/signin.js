@@ -29,6 +29,7 @@ const signin = async (req, res) => {
         email,
         id: user._id,
         balance: user.balance,
+        balanceHasBeenSet: user.balanceHasBeenSet
       },
     },
   });

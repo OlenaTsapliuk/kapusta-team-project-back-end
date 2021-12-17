@@ -36,6 +36,10 @@ const userSchema = Schema(
       type: Number,
       default: 0,
     },
+    balanceHasBeenSet: {
+      type: Boolean,
+      default: false,
+    }
   },
   { versionKey: false, timestamps: true }
 );
