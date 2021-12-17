@@ -30,18 +30,23 @@ const googleRedirect = async (req, res) => {
       Authorization: `Bearer ${tokenData.data.access_token}`,
     },
   });
-
-  const user = await User.findOne(userData.data.email);
+  const { email } = userData.data;
+  const user = await User.findOne({ email });
 
   if (!user) {
     return res.redirect(`${process.env.FRONT_URL}/signup`);
   }
+
   const payload = {
     id: user._id,
   };
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "1h" });
+
   await User.findByIdAndUpdate(user._id, { token });
-  return res.redirect(`${process.env.FRONT_URL}/transactions`);
+  const userToken = await User.findOne({ token });
+  return res.redirect(
+    `${process.env.FRONT_URL}/api/users/google-redirect?token=${userToken.token}`
+  );
 };
 
 module.exports = googleRedirect;
