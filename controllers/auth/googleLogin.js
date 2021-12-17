@@ -4,6 +4,7 @@ const googleLogin = async (req, res) => {
   const params = queryString.stringify({
     client_id: process.env.GOOGLE_CLIENT_ID,
     redirect_uri: `${process.env.BASE_URL}/api/users/google-redirect`,
+
     scope: [
       "https://www.googleapis.com/auth/userinfo.email",
       "https://www.googleapis.com/auth/userinfo.profile",
@@ -14,5 +15,6 @@ const googleLogin = async (req, res) => {
   });
   return res.redirect(`https://accounts.google.com/o/oauth2/v2/auth?${params}`);
 };
+console.log(process.env.BASE_URL);
 
 module.exports = googleLogin;

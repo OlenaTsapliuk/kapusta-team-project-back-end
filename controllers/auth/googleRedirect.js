@@ -31,16 +31,16 @@ const googleRedirect = async (req, res) => {
     },
   });
 
-  //   const user = await User.findOne(userData.data.email);
+  const user = await User.findOne(userData.data.email);
 
-  //   if (!user) {
-  //     return res.redirect(`${process.env.FRONT_URL}/signup`);
-  //   }
-  //   const payload = {
-  //     id: user._id,
-  //   };
-  //   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "1h" });
-  //   await User.findByIdAndUpdate(user._id, { token });
+  if (!user) {
+    return res.redirect(`${process.env.FRONT_URL}/signup`);
+  }
+  const payload = {
+    id: user._id,
+  };
+  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "1h" });
+  await User.findByIdAndUpdate(user._id, { token });
   return res.redirect(`${process.env.FRONT_URL}/transactions`);
 };
 
