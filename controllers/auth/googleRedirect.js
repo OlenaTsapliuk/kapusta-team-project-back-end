@@ -33,9 +33,9 @@ const googleRedirect = async (req, res) => {
 
   const user = await User.findOne(userData.data.email);
 
-  if (!user) {
-    return res.redirect(`${process.env.FRONT_URL}/signup`);
-  }
+  // if (!user) {
+  //   return res.redirect(`${process.env.FRONT_URL}/signup`);
+  // }
   const payload = {
     id: user._id,
   };
