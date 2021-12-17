@@ -544,6 +544,40 @@
         }
       }
     },
+    "/api/transactions/annual/{:year}": {
+      "get": {
+        "tags": ["Transaction"],
+        "summary": "Get all transactions data for requested year",
+        "parameters": [
+          {
+            "in": "path",
+            "name": ":year",
+            "required": true,
+            "type": "string",
+            "description": "Year in format YYYY"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnnualTransactionsResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
     "/api/categories/": {
       "post": {
         "tags": ["Category"],
@@ -1343,6 +1377,162 @@
                       }
                     ]
                   }
+                ]
+              }
+            }
+          }
+        }
+      },
+      "AnnualTransactionsResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Request status",
+            "example": "sucsess"
+          },
+          "code": {
+            "type": "number",
+            "description": "Request status code",
+            "example": 201
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "incomesForYear": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                "month": {
+                  "type": "string",
+                  "description": "Month in short format",
+                  "example": "Dec"
+                },
+                "sum": {
+                  "type": "number",
+                  "description": "Total sum for requested month, if there was no transactions, value will be 0",
+                  "example": 3300
+                }
+              }
+                },
+                "example": [
+                  {
+                "month": "Jan",
+                "sum": 10000
+            },
+            {
+                "month": "Feb",
+                "sum": 10000
+            },
+            {
+                "month": "Mar",
+                "sum": 33333
+            },
+            {
+                "month": "Apr",
+                "sum": 0
+            },
+            {
+                "month": "May",
+                "sum": 0
+            },
+            {
+                "month": "Jun",
+                "sum": 0
+            },
+            {
+                "month": "Jul",
+                "sum": 0
+            },
+            {
+                "month": "Aug",
+                "sum": 0
+            },
+            {
+                "month": "Sep",
+                "sum": 0
+            },
+            {
+                "month": "Oct",
+                "sum": 0
+            },
+            {
+                "month": "Nov",
+                "sum": 0
+            },
+            {
+                "month": "Dec",
+                "sum": 10000
+            }
+                ]
+              },
+              "expensesForYear": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                "month": {
+                  "type": "string",
+                  "description": "Month in short format",
+                  "example": "Dec"
+                },
+                "sum": {
+                  "type": "number",
+                  "description": "Total sum for requested month, if there was no transactions, value will be 0",
+                  "example": 3300
+                }
+              }
+                },
+                "example": [
+                  {
+                "month": "Jan",
+                "sum": 0
+            },
+            {
+                "month": "Feb",
+                "sum": 0
+            },
+            {
+                "month": "Mar",
+                "sum": 0
+            },
+            {
+                "month": "Apr",
+                "sum": 0
+            },
+            {
+                "month": "May",
+                "sum": 0
+            },
+            {
+                "month": "Jun",
+                "sum": 0
+            },
+            {
+                "month": "Jul",
+                "sum": 0
+            },
+            {
+                "month": "Aug",
+                "sum": 0
+            },
+            {
+                "month": "Sep",
+                "sum": 0
+            },
+            {
+                "month": "Oct",
+                "sum": 0
+            },
+            {
+                "month": "Nov",
+                "sum": 0
+            },
+            {
+                "month": "Dec",
+                "sum": 3455
+            }
                 ]
               }
             }
