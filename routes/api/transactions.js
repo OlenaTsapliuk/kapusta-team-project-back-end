@@ -11,7 +11,8 @@ const {
   deleteTransaction,
   getMonthlyIncome,
   getMonthlyExpense,
-  getAllMonthlyData
+  getAllMonthlyData,
+  getAllAnnualTransactions
 } = require("../../controllers/transactions");
 
 const { transactionJoiSchema } = require("../../models/transaction");
@@ -25,6 +26,7 @@ router.delete("/:transactionId", authenticate, controllerWrapper(deleteTransacti
 router.get("/income/:date", authenticate, controllerWrapper(getMonthlyIncome));
 router.get("/expense/:date", authenticate, controllerWrapper(getMonthlyExpense));
 router.get("/:date", authenticate, controllerWrapper(getAllMonthlyData));
+router.get("/annual/:year", authenticate, controllerWrapper(getAllAnnualTransactions));
 
 
 module.exports = router;
