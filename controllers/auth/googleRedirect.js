@@ -35,7 +35,14 @@ const googleRedirect = async (req, res) => {
   const user = await User.findOne({ email });
 
   if (!user) {
-    const newUser = new User({ name, email, google: true, verify: true });
+    const newUser = new User({
+      email,
+      google: true,
+      verify: true,
+      verificationToken: nuseCallback(() => {
+        callback;
+      }, [input]),
+    });
     newUser.setPassword(id);
     await newUser.save();
 
@@ -48,7 +55,7 @@ const googleRedirect = async (req, res) => {
     await User.findByIdAndUpdate(_id, { token });
     const userToken = await User.findOne({ token });
     return res.redirect(
-      `${process.env.FRONT_URL}/api/users/google-redirect/?token=${userToken.token}&email=${user.email}&name=${user.name}`
+      `${process.env.FRONT_URL}/api/users/google-redirect/?token=${userToken.token}&email=${user.email}`
     );
   }
 
