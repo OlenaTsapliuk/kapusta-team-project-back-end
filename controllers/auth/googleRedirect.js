@@ -30,45 +30,30 @@ const googleRedirect = async (req, res) => {
       Authorization: `Bearer ${tokenData.data.access_token}`,
     },
   });
-
-  const { id, email, given_name: name } = userData.data;
+  const { id, email, name } = userData.data;
   const user = await User.findOne({ email });
 
   if (!user) {
-    const newUser = new User({ name, email, verify: true });
-    newUser.setPassword(password);
-    return await newUser.save();
+    const newUser = new User({ name, email, google: true, verify: true });
+    newUser.setPassword(id);
+    await newUser.save();
+
+    const payload = {
+      id: user._id,
+    };
+    const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "2h" });
+    const { _id } = newUser;
+
+    await User.findByIdAndUpdate(_id, { token });
+    const userToken = await User.findOne({ token });
+    return res.redirect(
+      `${process.env.FRONT_URL}/api/users/google-redirect/?token=${userToken}&email=${user.email}&name=${user.name}`
+    );
   }
-
-  const payload = {
-    id: user._id,
-  };
-  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "2h" });
-
-  await User.findByIdAndUpdate(user._id, { token });
-  const userToken = await User.findOne({ token });
 
   return res.redirect(
     `${process.env.BASE_URL}/api/users/google-redirect/?token=${userToken}&email=${user.email}&name=${user.name}`
   );
 };
-//   const { email } = userData.data;
-//   const user = await User.findOne({ email });
-
-//   // if (!user) {
-//   //   return res.redirect(`${process.env.FRONT_URL}/signup`);
-//   // }
-
-//   const payload = {
-//     id: user._id,
-//   };
-//   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "1h" });
-
-//   await User.findByIdAndUpdate(user._id, { token });
-//   const userToken = await User.findOne({ token });
-//   return res.redirect(
-//     `${process.env.FRONT_URL}/api/users/google-redirect?token=${userToken.token}`
-//   );
-// };
 
 module.exports = googleRedirect;
