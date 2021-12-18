@@ -31,7 +31,7 @@ const googleRedirect = async (req, res) => {
     },
   });
 
-  const { id, email, given_name: name } = userData.data;
+  const { id, email, given_name: name, password } = userData.data;
   const user = await User.findOne({ email });
 
   if (!user) {
