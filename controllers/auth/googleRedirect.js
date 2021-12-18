@@ -39,11 +39,11 @@ const googleRedirect = async (req, res) => {
     newUser.setPassword(id);
     await newUser.save();
 
+    const { _id } = newUser;
     const payload = {
-      id: user._id,
+      _id,
     };
     const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "2h" });
-    const { _id } = newUser;
 
     await User.findByIdAndUpdate(_id, { token });
     const userToken = await User.findOne({ token });
@@ -52,8 +52,16 @@ const googleRedirect = async (req, res) => {
     );
   }
 
+  const { _id } = user;
+  const payload = {
+    _id,
+  };
+  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "2h" });
+
+  await User.findByIdAndUpdate(_id, { token });
+  const userToken = await User.findOne({ token });
   return res.redirect(
-    `${process.env.BASE_URL}/api/users/google-redirect/?token=${userToken}&email=${user.email}&name=${user.name}`
+    `${process.env.FRONT_URL}/api/users/google-redirect/?token=${userToken.token}&email=${user.email}&name=${user.name}`
   );
 };
 
