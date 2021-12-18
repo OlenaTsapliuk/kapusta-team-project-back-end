@@ -23,6 +23,10 @@ const userSchema = Schema(
       type: String,
       default: null,
     },
+    google: {
+      type: Boolean,
+      default: false,
+    },
 
     verify: {
       type: Boolean,
@@ -39,7 +43,7 @@ const userSchema = Schema(
     balanceHasBeenSet: {
       type: Boolean,
       default: false,
-    }
+    },
   },
   { versionKey: false, timestamps: true }
 );
