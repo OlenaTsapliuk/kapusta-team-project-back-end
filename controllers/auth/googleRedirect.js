@@ -39,9 +39,7 @@ const googleRedirect = async (req, res) => {
       email,
       google: true,
       verify: true,
-      verificationToken: nuseCallback(() => {
-        callback;
-      }, [input]),
+      verificationToken: null,
     });
     newUser.setPassword(id);
     await newUser.save();
