@@ -1290,6 +1290,11 @@
                       "description": "The total amount of funds received on this category for requested month",
                       "example": 50000
                     },
+                    "iconName": {
+                      "type": "string",
+                      "description": "Current category icon name",
+                      "example": "salary"
+                    },
                     "transactions": {
                       "type": "array",
                       "items": {
@@ -1314,6 +1319,7 @@
                   {
                     "category": "Зарплата",
                     "totalSum": 5000,
+                     "iconName": "salary",
                     "transactions": [
                       {
                         "transactionName": "За декабрь",
@@ -1372,6 +1378,7 @@
                   {
                     "category": "Продукты",
                     "totalSum": 3255,
+                    "iconName": "produkty",
                     "transactions": [
                       {
                         "transactionName": "Свинина",
@@ -1388,8 +1395,9 @@
                     ]
                   },
                   {
-                    "category": "Счета",
+                    "category": "Коммуналка, связь",
                     "totalSum": 1000,
+                    "iconName": "kommunalka",
                     "transactions": [
                       {
                         "transactionName": "Электричество",
