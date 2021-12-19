@@ -1,4 +1,4 @@
-const { Transaction } = require("../../models");
+const { Transaction, Category } = require("../../models");
 const {BadRequest} = require("http-errors")
 
 const getAllMonthlyData = async (req, res) => {
@@ -28,6 +28,10 @@ const getAllMonthlyData = async (req, res) => {
     const allIncomes = allIncomeTransactions.reduce((acc, transaction) => acc + transaction.sum, 0)
     const allExpenses = allExpenseTransactions.reduce((acc, transaction) => acc + transaction.sum, 0)
 
+    const userCategories = await Category.find({ owner: _id })
+    const basicCategories = await Category.find({ basicCategory: true })
+    const allCategories = [...userCategories, ...basicCategories]
+
     const allIncomeUnicCategories = []
     allIncomeTransactions.forEach(t => {
         if (!allIncomeUnicCategories.includes(t.category)) {
@@ -42,14 +46,27 @@ const getAllMonthlyData = async (req, res) => {
         }
     })
 
+
     const incomes = []
     allIncomeUnicCategories.forEach(cat => {
         incomes.push({
             category: cat,
             totalSum: 0,
+            iconName: "",
             transactions: []
         })
-        
+
+        allCategories.forEach(c => {
+            if (c.category === cat) {
+                incomes.forEach(inc => {
+                    if (inc.category === c.category) {
+                        inc.iconName = c.iconName
+                    }
+                })
+                
+            }
+        })
+    
         allIncomeTransactions.forEach(transaction => {
             if (transaction.category === cat) {
                 const obj = incomes.find(c => c.category === cat)
@@ -70,12 +87,24 @@ const getAllMonthlyData = async (req, res) => {
 
     const expenses = [] 
     allExpenseUnicCategories.forEach(cat => {
-        const transactions = []
         expenses.push({
             category: cat,
             totalSum: 0,
-            transactions
+            iconName: "",
+            transactions: []
         })
+
+        allCategories.forEach(c => {
+            if (c.category === cat) {
+                expenses.forEach(exp => {
+                    if (exp.category === c.category) {
+                        exp.iconName = c.iconName
+                    }
+                })
+                
+            }
+        })
+
         allExpenseTransactions.forEach(transaction => {
             if (transaction.category === cat) {
                 const obj = expenses.find(c => c.category === cat)
