@@ -35,21 +35,12 @@ const googleRedirect = async (req, res) => {
   const user = await User.findOne({ email });
 
   if (!user) {
-    // const newUser = await User.create({
-    //   email,
-    //   google: true,
-    //   verify: true,
-    //   verificationToken: null,
-    // });
-    const newUser = await User.findOneAndUpdate(
-      { email },
-      {
-        verificationToken: null,
-        verify: true,
-        google: true,
-      },
-      { new: true }
-    );
+    const newUser = await User.create({
+      email,
+      google: true,
+      verify: true,
+      verificationToken: null,
+    });
     newUser.setPassword(id);
     await newUser.save();
 
