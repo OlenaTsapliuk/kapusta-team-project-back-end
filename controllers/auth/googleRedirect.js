@@ -31,12 +31,13 @@ const googleRedirect = async (req, res) => {
     },
   });
 
-  const { id, email, name } = userData.data;
+  const { id, email } = userData.data;
   const user = await User.findOne({ email });
 
   if (!user) {
     const newUser = await User.create({
       email,
+      token: null,
       google: true,
       verify: true,
       verificationToken: null,
@@ -48,12 +49,11 @@ const googleRedirect = async (req, res) => {
     const payload = {
       _id,
     };
-    const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "2h" });
-
+    const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "7d" });
     await User.findByIdAndUpdate(_id, { token });
-    const userToken = await User.findOne({ token });
+
     return res.redirect(
-      `${process.env.FRONT_URL}/api/users/google-redirect/?token=${userToken.token}&email=${user.email}`
+      `${process.env.FRONT_URL}/api/users/google-redirect/?access_token=${token}&email=${user.email}`
     );
   }
 
@@ -61,12 +61,11 @@ const googleRedirect = async (req, res) => {
   const payload = {
     _id,
   };
-  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "2h" });
-
+  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "7d" });
   await User.findByIdAndUpdate(_id, { token });
-  const userToken = await User.findOne({ token });
+
   return res.redirect(
-    `${process.env.FRONT_URL}/api/users/google-redirect/?token=${userToken.token}&email=${user.email}&name=${user.name}`
+    `${process.env.FRONT_URL}/api/users/google-redirect/?access_token=${token}&email=${user.email}&name=${user.name}`
   );
 };
 
