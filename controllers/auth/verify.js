@@ -16,9 +16,9 @@ const verify = async (req, res) => {
     throw new NotFound("User not found");
   }
 
-  res.status(200).json({
+  res.status(201).json({
     status: "success",
-    code: 200,
+    code: 201,
     message: "Verification successful",
   });
 };

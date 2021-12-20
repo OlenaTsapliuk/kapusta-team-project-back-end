@@ -1,3 +1,4 @@
+const { NotFound } = require("http-errors");
 const { User } = require("../../models");
 const { sendEmail } = require("../../helpers");
 
@@ -5,19 +6,11 @@ const resendingVerify = async (req, res) => {
   const { email } = req.body;
   const { verificationToken } = req.params;
   if (!email) {
-    res.status(400).json({
-      code: 400,
-      message: "Missing required field email",
-    });
-    return;
+    throw new NotFound("Wrong email or password");
   }
   const user = await User.findOne({ email });
   if (!user) {
-    res.json({
-      code: 400,
-      message: "User not found",
-    });
-    return;
+    throw new NotFound("User not found");
   }
   if (user.verify) {
     res.status(400).json({
