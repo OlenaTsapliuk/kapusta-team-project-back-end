@@ -741,11 +741,6 @@
                 "format": "email",
                 "description": "User's email",
                 "example": "user@ukr.net"
-              },
-              "password": {
-                "type": "string",
-                "description": "User's password",
-                "example": "qwerty123"
               }
             }
           }
@@ -1319,7 +1314,7 @@
                   {
                     "category": "Зарплата",
                     "totalSum": 5000,
-                     "iconName": "salary",
+                    "iconName": "salary",
                     "transactions": [
                       {
                         "transactionName": "За декабрь",
