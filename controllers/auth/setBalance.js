@@ -9,6 +9,7 @@ const setBalance = async (req, res) => {
     status: "success",
     code: 201,
     message: `User balance set as ${balance} value`,
+    balance
   });
 }
 
