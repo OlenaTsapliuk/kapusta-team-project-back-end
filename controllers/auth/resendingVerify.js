@@ -23,7 +23,7 @@ const resendingVerify = async (req, res) => {
   const registerEmail = {
     to: email,
     subject: "Registration confirm",
-    html: `<a href="https://kapusta-team-project-back-end.herokuapp.com/api/users/verify/${verificationToken}">Click to confirm email</a>`,
+    html: `<a href=${process.env.VERIFY_LINK}/${verificationToken}">Click to confirm email</a>`,
   };
   sendEmail(registerEmail);
 

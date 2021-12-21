@@ -53,7 +53,7 @@ const googleRedirect = async (req, res) => {
     await User.findByIdAndUpdate(_id, { token });
 
     return res.redirect(
-      `${process.env.FRONT_URL}/api/users/google-redirect/?access_token=${token}&email=${user.email}`
+      `${process.env.FRONT_URL}/?access_token=${token}&email=${user.email}`
     );
   }
 
