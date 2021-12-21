@@ -29,7 +29,6 @@ const signup = async (req, res) => {
     message: "Register success",
     user: {
       email,
-      password,
     },
   });
 };
