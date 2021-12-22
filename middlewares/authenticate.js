@@ -2,7 +2,7 @@ const { Unauthorized, NotFound } = require("http-errors");
 const jwt = require("jsonwebtoken");
 const { User } = require("../models");
 
-const { SECRET_KEY = "jghdfggfhgg" } = process.env;
+const { SECRET_KEY } = process.env;
 
 const authenticate = async (req, res, next) => {
   try {
@@ -17,7 +17,7 @@ const authenticate = async (req, res, next) => {
     try {
       const { id } = jwt.verify(token, SECRET_KEY);
       const user = await User.findById(id);
-      if (!user || !user.token) {
+      if (!user.token) {
         throw new Unauthorized("User not found");
       }
       req.user = user;
