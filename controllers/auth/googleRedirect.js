@@ -39,8 +39,6 @@ const googleRedirect = async (req, res) => {
       email,
       token: null,
       google: true,
-      verify: true,
-      verificationToken: null,
     });
     newUser.setPassword(id);
     await newUser.save();
