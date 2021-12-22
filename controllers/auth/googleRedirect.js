@@ -50,9 +50,9 @@ const googleRedirect = async (req, res) => {
     };
     const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "7d" });
     await User.findByIdAndUpdate(_id, { token });
-    console.log(user.email);
+
     return res.redirect(
-      `${process.env.FRONT_URL}/?access_token=${token}&email=${newUser.email}`
+      `${process.env.FRONT_URL}/?access_token=${token}&email=${email}`
     );
   }
 
