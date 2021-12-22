@@ -57,7 +57,7 @@ const googleRedirect = async (req, res) => {
 
   const { _id } = user;
   const payload = {
-    _id,
+    id: _id,
   };
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "7d" });
   await User.findByIdAndUpdate(_id, { token });
