@@ -9,8 +9,6 @@ const {
   signup,
   signin,
   logout,
-  verify,
-  resendingVerify,
   setBalance,
   googleLogin,
   googleRedirect,
@@ -22,9 +20,6 @@ const router = express.Router();
 router.post("/signup", validation(joiUserSchema), controllerWrapper(signup));
 router.post("/signin", validation(joiUserSchema), controllerWrapper(signin));
 router.post("/logout", authenticate, controllerWrapper(logout));
-
-router.get("/verify/:verificationToken", controllerWrapper(verify));
-router.post("/verify/", controllerWrapper(resendingVerify));
 
 router.post(
   "/setBalance",

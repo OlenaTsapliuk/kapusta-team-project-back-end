@@ -28,14 +28,6 @@ const userSchema = Schema(
       default: false,
     },
 
-    verify: {
-      type: Boolean,
-      default: false,
-    },
-    verificationToken: {
-      type: String,
-      // required: [true, "Verify token is required"],
-    },
     balance: {
       type: Number,
       default: 0,

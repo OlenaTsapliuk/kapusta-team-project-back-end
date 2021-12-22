@@ -99,103 +99,7 @@
         }
       }
     },
-    "/api/users/verify/{:verificationToken}": {
-      "get": {
-        "tags": ["Authorization"],
-        "summary": "User verification by SendGrid",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "verificationToken",
-            "required": true,
-            "type": "string",
-            "description": "Verification token sent by SendGrid"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Verification successful",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/VerificationLink"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "User not found by token",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/MessageNotFound"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/users/verify": {
-      "post": {
-        "tags": ["Authorization"],
-        "summary": "Resending verification message",
-        "parameters": [],
-        "requestBody": {
-          "description": "User's email",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Email"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Email was resent",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/VerificationLink"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Message"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Bad request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/MessageNotFound"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Server error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ServerMessage"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
+
     "/api/users/signin": {
       "post": {
         "tags": ["Authorization"],
@@ -868,27 +772,7 @@
           }
         }
       },
-      "VerificationLink": {
-        "type": "object",
-        "properties": {
-          "status": {
-            "type": "string",
-            "description": "Operation status",
-            "example": "success"
-          },
-          "code": {
-            "type": "integer",
-            "format": "int32",
-            "description": "Status code",
-            "example": 200
-          },
-          "message": {
-            "type": "string",
-            "description": "Verification message",
-            "example": "Verification successful"
-          }
-        }
-      },
+
       "ServerMessage": {
         "type": "object",
         "properties": {
@@ -1352,7 +1236,7 @@
                   {
                     "category": "Зарплата",
                     "totalSum": 5000,
-                     "iconName": "salary",
+                    "iconName": "salary",
                     "transactions": [
                       {
                         "transactionName": "За декабрь",

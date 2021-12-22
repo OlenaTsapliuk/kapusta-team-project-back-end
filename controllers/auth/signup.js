@@ -10,18 +10,10 @@ const signup = async (req, res) => {
   if (user) {
     throw new Conflict(`User with email=${email} already exist`);
   }
-  const verificationToken = nanoid();
-  const newUser = new User({ email, verificationToken });
+
+  const newUser = new User({ email });
   newUser.setPassword(password);
   await newUser.save();
-
-  const registerEmail = {
-    to: email,
-    subject: "Registration confirm",
-    html: `<a href=${process.env.VERIFY_LINK}/${verificationToken}">Click to confirm email</a>`,
-  };
-
-  await sendEmail(registerEmail);
 
   res.status(201).json({
     status: "success",
