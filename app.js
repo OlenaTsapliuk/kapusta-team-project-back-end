@@ -16,7 +16,12 @@ app.use(logger(formatsLogger));
 app.use(cors());
 app.use(express.json());
 
-app.use(express.urlencoded());
+app.use(
+  express.urlencoded({
+    extended: true,
+  })
+);
+
 app.use("/api/users", usersRouter);
 app.use("/api/transactions", transactionsRouter);
 app.use("/api/categories", categoriesRouter);
