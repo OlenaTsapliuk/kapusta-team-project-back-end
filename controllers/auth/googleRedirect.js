@@ -44,7 +44,6 @@ const googleRedirect = async (req, res) => {
     });
     newUser.setPassword(id);
     await newUser.save();
-
     const { _id } = newUser;
     const payload = {
       _id,
