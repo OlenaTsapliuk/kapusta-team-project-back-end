@@ -16,6 +16,12 @@ app.use(logger(formatsLogger));
 app.use(cors());
 app.use(express.json());
 
+app.post("/", (req, res) => {
+  var data = req.body.Email;
+  console.log("the data added to the database is: ");
+  console.log(data);
+});
+
 app.use("/api/users", usersRouter);
 app.use("/api/transactions", transactionsRouter);
 app.use("/api/categories", categoriesRouter);
