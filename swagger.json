@@ -1011,6 +1011,11 @@
             "description": "Operation status code",
             "example": 200
           },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "example": "Transaction deleted"
+          },
           "balance": {
             "type": "number",
             "description": "Updated user balance",
