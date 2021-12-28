@@ -342,7 +342,14 @@
         "security": [{ "Bearer": [] }],
         "responses": {
           "200": {
-            "description": "Transaction deleted"
+            "description": "Successful transaction remove",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RemoveTransactionResponse"
+                }
+              }
+            }
           },
           "401": {
             "description": "Unauthorized"
@@ -988,6 +995,31 @@
             "type": "number",
             "description": "User balance after success transaction",
             "example": 100000
+          }
+        }
+      },
+      "RemoveTransactionResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Operation status",
+            "example": "sucsess"
+          },
+          "code": {
+            "type": "number",
+            "description": "Operation status code",
+            "example": 200
+          },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "example": "Transaction deleted"
+          },
+          "balance": {
+            "type": "number",
+            "description": "Updated user balance",
+            "example": 10000
           }
         }
       },
