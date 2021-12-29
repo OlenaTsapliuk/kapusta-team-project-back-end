@@ -15,17 +15,26 @@ const deleteTransaction = async (req, res) => {
     if (transaction.income) {
         const updatedBalance = owner.balance - transaction.sum
         await User.findByIdAndUpdate(_id, { balance: updatedBalance })
-        return
-    }
-    const updatedBalance = owner.balance + transaction.sum
-    await User.findByIdAndUpdate(_id, { balance: updatedBalance })
-
-    res.json({
+        res.json({
         status: 'sucsess',
         code: 200,
         message: "Transaction deleted",
         balance: updatedBalance
     })
+    }
+    if (!transaction.income) {
+        const updatedBalance = owner.balance + transaction.sum
+        await User.findByIdAndUpdate(_id, { balance: updatedBalance })
+        res.json({
+        status: 'sucsess',
+        code: 200,
+        message: "Transaction deleted",
+        balance: updatedBalance
+    })
+    }
+    
+
+    
 
 }
 
