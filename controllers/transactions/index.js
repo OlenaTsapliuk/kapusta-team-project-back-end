@@ -5,6 +5,7 @@ const getMonthlyIncome = require("./getMonthlyIncome")
 const getMonthlyExpense = require("./getMonthlyExpense")
 const getAllMonthlyData = require("./getAllMonthlyData")
 const getAllAnnualTransactions = require("./getAllAnnualTransactions")
+const correctDateFormat = require("./dateFormat")
 
 module.exports = {
     expense,
@@ -13,5 +14,6 @@ module.exports = {
     getMonthlyIncome,
     getMonthlyExpense,
     getAllMonthlyData,
-    getAllAnnualTransactions
+    getAllAnnualTransactions,
+    correctDateFormat
 }
