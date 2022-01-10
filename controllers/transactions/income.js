@@ -1,9 +1,14 @@
 const { User, Transaction } = require("../../models");
 const { BadRequest } = require("http-errors");
+const correctDateFormat = require("./dateFormat")
 
 const income = async (req, res) => {
-    const { sum, category, income, transactionName } = req.body
+    const { sum, category, income, transactionName, createdAt } = req.body
     const { _id } = req.user
+    
+    if (!correctDateFormat(createdAt)) {
+        throw new BadRequest("Wrong date format. Correct is DD-MM-YYYY")
+    }
     
     if (!income) {
         throw new BadRequest("Wrong transaction type")
@@ -18,7 +23,8 @@ const income = async (req, res) => {
         transactionName,
         category,
         income,
-        owner: _id
+        owner: _id,
+        createdAt
     })
 
     res.status(201).json({

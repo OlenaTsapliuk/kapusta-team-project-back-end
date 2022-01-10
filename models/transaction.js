@@ -22,17 +22,22 @@ const transactionSchema = Schema(
     },
     category: {
       type: String,
-      required: [true, "You ust set a category"]
+      required: [true, "You must set a category"]
+    },
+    createdAt: {
+      type: String,
+      required: [true, "You must set date"]
     }
   },
-  { versionKey: false, timestamps: true }
+  { versionKey: false, timestamps: false }
 );
 
 const transactionJoiSchema = Joi.object({
   sum: Joi.number().required(),
   income: Joi.boolean().required(),
   category: Joi.string().required(),
-  transactionName: Joi.string().required()
+  transactionName: Joi.string().required(),
+  createdAt: Joi.string().required()
 });
 
 const Transaction = model("transaction", transactionSchema);
