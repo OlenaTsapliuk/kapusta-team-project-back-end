@@ -14,12 +14,14 @@ const income = async (req, res) => {
         throw new BadRequest("Wrong transaction type")
     }
 
+    const sumNormalized = Number(sum.toFixed(2))
     const owner = await User.findById(_id)
-    const updatedBalance = owner.balance + Number(sum)
-    await User.findByIdAndUpdate(_id, { balance: updatedBalance })
+    const updatedBalance = owner.balance + sumNormalized
+    await User.findByIdAndUpdate(_id, { balance: Number(updatedBalance.toFixed(2)) })
+    
     
     const newTransaction = await Transaction.create({
-        sum,
+        sum: sumNormalized,
         transactionName,
         category,
         income,
@@ -31,7 +33,7 @@ const income = async (req, res) => {
         status: 'sucsess',
         code: 201,
         data: newTransaction,
-        balance: updatedBalance
+        balance: Number(updatedBalance.toFixed(2))
     })
 
 }

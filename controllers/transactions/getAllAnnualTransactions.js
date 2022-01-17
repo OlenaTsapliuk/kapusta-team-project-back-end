@@ -50,12 +50,12 @@ const getAllAnnualTransactions = async (req, res) => {
         const month = t.createdAt.split("-")[1]
         incomesForYear.forEach(m => {
             if (month === m.month && t.income) {
-                m.sum += t.sum
+                m.sum = Number((m.sum + t.sum).toFixed(2))
             }
         })
         expensesForYear.forEach(m => {
             if (month === m.month && !t.income) {
-                m.sum += t.sum
+                m.sum = Number((m.sum + t.sum).toFixed(2))
             }
         })
     })

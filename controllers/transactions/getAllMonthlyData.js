@@ -4,10 +4,9 @@ const {BadRequest} = require("http-errors")
 const getAllMonthlyData = async (req, res) => {
     const { _id } = req.user
     const { date } = req.params
-    const correctMonthFormat = date.split("-")[0].length === 2
-    const correctYearFormat = date.split("-")[1].length === 4
-   
-    if (!correctMonthFormat || !correctYearFormat) {
+
+    const correctDateFormat = date.split("-").length === 2 && date.split("-")[0].length === 2 && date.split("-")[1].length === 4
+    if (!correctDateFormat) {
         throw new BadRequest('Invalid date format.')
     }
 
@@ -32,19 +31,16 @@ const getAllMonthlyData = async (req, res) => {
     const allCategories = [...userCategories, ...basicCategories]
 
     const allIncomeUnicCategories = []
-    allIncomeTransactions.forEach(t => {
-        if (!allIncomeUnicCategories.includes(t.category)) {
+    const allExpenseUnicCategories = []
+
+    currentMonthTransactions.forEach(t => {
+        if (!allIncomeUnicCategories.includes(t.category) && t.income) {
             allIncomeUnicCategories.push(t.category)
         }
-    })
-
-    const allExpenseUnicCategories = []
-    allExpenseTransactions.forEach(t => {
-        if (!allExpenseUnicCategories.includes(t.category)) {
+        if (!allExpenseUnicCategories.includes(t.category) && !t.income) {
             allExpenseUnicCategories.push(t.category)
         }
     })
-
 
     const incomes = []
     allIncomeUnicCategories.forEach(cat => {
@@ -62,14 +58,13 @@ const getAllMonthlyData = async (req, res) => {
                         inc.iconName = c.iconName
                     }
                 })
-                
             }
         })
     
         allIncomeTransactions.forEach(transaction => {
             if (transaction.category === cat) {
                 const obj = incomes.find(c => c.category === cat)
-                obj.totalSum += transaction.sum
+                obj.totalSum = Number((obj.totalSum + transaction.sum).toFixed(2))
                 const isNameInList = obj.transactions.find( i => i.transactionName === transaction.transactionName)
                 if (!isNameInList) {
                     obj.transactions.push({
@@ -78,7 +73,7 @@ const getAllMonthlyData = async (req, res) => {
                     })
                     return
                 }
-                isNameInList.transactionTotalSum += transaction.sum
+                isNameInList.transactionTotalSum = Number((isNameInList.transactionTotalSum + transaction.sum).toFixed(2))
             }
         })
         
@@ -107,7 +102,7 @@ const getAllMonthlyData = async (req, res) => {
         allExpenseTransactions.forEach(transaction => {
             if (transaction.category === cat) {
                 const obj = expenses.find(c => c.category === cat)
-                obj.totalSum += transaction.sum
+                obj.totalSum = Number((obj.totalSum + transaction.sum).toFixed(2))
                 const isNameInList = obj.transactions.find( i => i.transactionName === transaction.transactionName)
                 if (!isNameInList) {
                     obj.transactions.push({
@@ -116,14 +111,14 @@ const getAllMonthlyData = async (req, res) => {
                     })
                     return
                 }
-                isNameInList.transactionTotalSum += transaction.sum
+                isNameInList.transactionTotalSum = Number((isNameInList.transactionTotalSum + transaction.sum).toFixed(2))
                 }
         })
 })
 
     const result = {
-        allIncomes,
-        allExpenses,
+        allIncomes: Number(allIncomes.toFixed(2)),
+        allExpenses: Number(allIncomes.toFixed(2)),
         incomes,
         expenses
     }

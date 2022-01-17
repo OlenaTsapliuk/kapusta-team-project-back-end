@@ -4,10 +4,9 @@ const {BadRequest} = require("http-errors")
 const getMonthlyExpense = async (req, res) => {
     const { _id } = req.user
     const { date } = req.params
-    const correctMonthFormat = date.split("-")[0].length === 2
-    const correctYearFormat = date.split("-")[1].length === 4
-   
-    if (!correctMonthFormat || !correctYearFormat) {
+
+    const correctDateFormat = date.split("-").length === 2 && date.split("-")[0].length === 2 && date.split("-")[1].length === 4
+    if (!correctDateFormat) {
         throw new BadRequest('Invalid date format.')
     }
 
