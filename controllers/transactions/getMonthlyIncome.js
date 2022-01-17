@@ -1,5 +1,6 @@
 const { Transaction } = require("../../models");
-const {BadRequest} = require("http-errors")
+const { BadRequest } = require("http-errors");
+const getCurrentMonthTransactions = require("./getCurrentMonthTransactions");
 
 const getMonthlyIncome = async (req, res) => {
     const { _id } = req.user
@@ -11,20 +12,12 @@ const getMonthlyIncome = async (req, res) => {
     }
 
     const transactions = await Transaction.find({ owner: _id, income: true })
-    const currentMonthTransactions = transactions.filter(t => {
-        const month = t.createdAt.split("-")[1]
-        const year = t.createdAt.split("-")[2]
-        const transactionDate = `${month}-${year}`
-
-        if (date === transactionDate) {
-            return t
-        }
-    })
+    const data = getCurrentMonthTransactions(transactions, date)
 
     res.json({
         status: 'sucsess',
       code: 200,
-      data: currentMonthTransactions
+      data
     })
 }
 

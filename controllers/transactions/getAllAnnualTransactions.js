@@ -11,56 +11,34 @@ const getAllAnnualTransactions = async (req, res) => {
         throw new BadRequest('Invalid year format.')
     }
 
-    const transactions = await Transaction.find({ owner: _id})
-    const currentYearTransactions = transactions.filter(t => {
+    const transactions = await Transaction.find({ owner: _id })
+    
+    const incomesForYear = []
+    const expensesForYear = []
+
+    transactions.forEach(t => {
+        
         const transactionYear = t.createdAt.split("-")[2]
-        if (year === transactionYear) {
-            return t
+        const transactionMonth = t.createdAt.split("-")[1]
+
+        const isMonthInIncomes = incomesForYear.find(elm => elm.month === transactionMonth)
+        const isMonthInExpense = expensesForYear.find(elm => elm.month === transactionMonth)
+
+        const addData = (a, b) => {
+             if (!a) {
+                b.push({ month: transactionMonth, sum: t.sum })
+                return
+            }
+            a.sum = Number((a.sum + t.sum).toFixed(2))
+        }
+
+        if (year === transactionYear && t.income) {
+            addData(isMonthInIncomes, incomesForYear)
+        }
+        if (year === transactionYear && !t.income) {
+            addData(isMonthInExpense, expensesForYear)
         }
     })
-    const incomesForYear =[ 
-        { month: "01", sum: 0 },
-        { month: "02", sum: 0 },
-        { month: "03", sum: 0 },
-        { month: "04", sum: 0 },
-        { month: "05", sum: 0 },
-        { month: "06", sum: 0 },
-        { month: "07", sum: 0 },
-        { month: "08", sum: 0 },
-        { month: "09", sum: 0 },
-        { month: "10", sum: 0 },
-        { month: "11", sum: 0 },
-        { month: "12", sum: 0 }
-    ]
-    const expensesForYear = [ 
-        { month: "01", sum: 0 },
-        { month: "02", sum: 0 },
-        { month: "03", sum: 0 },
-        { month: "04", sum: 0 },
-        { month: "05", sum: 0 },
-        { month: "06", sum: 0 },
-        { month: "07", sum: 0 },
-        { month: "08", sum: 0 },
-        { month: "09", sum: 0 },
-        { month: "10", sum: 0 },
-        { month: "11", sum: 0 },
-        { month: "12", sum: 0 }
-    ]
-    currentYearTransactions.forEach(t => {
-        const month = t.createdAt.split("-")[1]
-        incomesForYear.forEach(m => {
-            if (month === m.month && t.income) {
-                m.sum = Number((m.sum + t.sum).toFixed(2))
-            }
-        })
-        expensesForYear.forEach(m => {
-            if (month === m.month && !t.income) {
-                m.sum = Number((m.sum + t.sum).toFixed(2))
-            }
-        })
-    })
-
-
 
     res.json({
         status: 'sucsess',
