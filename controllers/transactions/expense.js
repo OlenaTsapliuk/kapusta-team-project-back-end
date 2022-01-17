@@ -18,7 +18,6 @@ const expense = async (req, res) => {
     const owner = await User.findById(_id)
     const updatedBalance = owner.balance - sumNormalized
     await User.findByIdAndUpdate(_id, { balance: Number(updatedBalance.toFixed(2)) })
-    
 
     const newTransaction = await Transaction.create({
         sum: sumNormalized,
