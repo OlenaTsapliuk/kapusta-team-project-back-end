@@ -12,26 +12,23 @@ const deleteTransaction = async (req, res) => {
     }
 
     const owner = await User.findById(_id)
+    let balance = owner.balance
+
     if (transaction.income) {
-        const updatedBalance = owner.balance - transaction.sum
-        await User.findByIdAndUpdate(_id, { balance: Number(updatedBalance.toFixed(2)) })
-        res.json({
-        status: 'sucsess',
-        code: 200,
-        message: "Transaction deleted",
-        balance: Number(updatedBalance.toFixed(2))
-    })
+        balance = Number((balance - transaction.sum).toFixed(2))
     }
     if (!transaction.income) {
-        const updatedBalance = owner.balance + transaction.sum
-        await User.findByIdAndUpdate(_id, { balance: Number(updatedBalance.toFixed(2)) })
-        res.json({
+        balance = Number((balance + transaction.sum).toFixed(2))
+    }
+    
+    await User.findByIdAndUpdate(_id, { balance })
+
+    res.json({
         status: 'sucsess',
         code: 200,
         message: "Transaction deleted",
-        balance: Number(updatedBalance.toFixed(2))
+        balance
     })
-    }
 }
 
 module.exports = deleteTransaction
