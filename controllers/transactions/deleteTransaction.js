@@ -32,10 +32,6 @@ const deleteTransaction = async (req, res) => {
         balance: Number(updatedBalance.toFixed(2))
     })
     }
-    
-
-    
-
 }
 
 module.exports = deleteTransaction
