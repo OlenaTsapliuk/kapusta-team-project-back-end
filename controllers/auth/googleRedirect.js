@@ -62,19 +62,7 @@ const googleRedirect = async (req, res) => {
   };
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "7d" });
   await User.findByIdAndUpdate(_id, { token });
-  res.status(201).json({
-    status: "success",
-    code: 201,
-    data: {
-      token,
-      user: {
-        email,
-        id: user._id,
-        balance: user.balance,
-        balanceHasBeenSet: user.balanceHasBeenSet,
-      },
-    },
-  });
+
   return res.redirect(
     `${process.env.FRONT_URL}/api/users/google-redirect/?access_token=${token}&email=${user.email}`
   );
