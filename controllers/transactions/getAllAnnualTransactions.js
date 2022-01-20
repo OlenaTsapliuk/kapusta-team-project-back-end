@@ -13,49 +13,49 @@ const getAllAnnualTransactions = async (req, res) => {
 
     const transactions = await Transaction.find({ owner: _id})
     const currentYearTransactions = transactions.filter(t => {
-        const transactionYear = t.createdAt.toString().split(" ")[3]
+        const transactionYear = t.createdAt.split("-")[2]
         if (year === transactionYear) {
             return t
         }
     })
     const incomesForYear =[ 
-        { month: "Jan", sum: 0 },
-        { month: "Feb", sum: 0 },
-        { month: "Mar", sum: 0 },
-        { month: "Apr", sum: 0 },
-        { month: "May", sum: 0 },
-        { month: "Jun", sum: 0 },
-        { month: "Jul", sum: 0 },
-        { month: "Aug", sum: 0 },
-        { month: "Sep", sum: 0 },
-        { month: "Oct", sum: 0 },
-        { month: "Nov", sum: 0 },
-        { month: "Dec", sum: 0 }
+        { month: "01", sum: 0 },
+        { month: "02", sum: 0 },
+        { month: "03", sum: 0 },
+        { month: "04", sum: 0 },
+        { month: "05", sum: 0 },
+        { month: "06", sum: 0 },
+        { month: "07", sum: 0 },
+        { month: "08", sum: 0 },
+        { month: "09", sum: 0 },
+        { month: "10", sum: 0 },
+        { month: "11", sum: 0 },
+        { month: "12", sum: 0 }
     ]
     const expensesForYear = [ 
-        { month: "Jan", sum: 0 },
-        { month: "Feb", sum: 0 },
-        { month: "Mar", sum: 0 },
-        { month: "Apr", sum: 0 },
-        { month: "May", sum: 0 },
-        { month: "Jun", sum: 0 },
-        { month: "Jul", sum: 0 },
-        { month: "Aug", sum: 0 },
-        { month: "Sep", sum: 0 },
-        { month: "Oct", sum: 0 },
-        { month: "Nov", sum: 0 },
-        { month: "Dec", sum: 0 }
+        { month: "01", sum: 0 },
+        { month: "02", sum: 0 },
+        { month: "03", sum: 0 },
+        { month: "04", sum: 0 },
+        { month: "05", sum: 0 },
+        { month: "06", sum: 0 },
+        { month: "07", sum: 0 },
+        { month: "08", sum: 0 },
+        { month: "09", sum: 0 },
+        { month: "10", sum: 0 },
+        { month: "11", sum: 0 },
+        { month: "12", sum: 0 }
     ]
     currentYearTransactions.forEach(t => {
-        const month = t.createdAt.toString().split(" ")[1]
+        const month = t.createdAt.split("-")[1]
         incomesForYear.forEach(m => {
             if (month === m.month && t.income) {
-                m.sum += t.sum
+                m.sum = Number((m.sum + t.sum).toFixed(2))
             }
         })
         expensesForYear.forEach(m => {
             if (month === m.month && !t.income) {
-                m.sum += t.sum
+                m.sum = Number((m.sum + t.sum).toFixed(2))
             }
         })
     })
