@@ -14,22 +14,7 @@ const googleLogin = async (req, res) => {
     prompt: "consent",
   });
 
-  return res
-    .redirect(`https://accounts.google.com/o/oauth2/v2/auth?${params}`)
-    .status(201)
-    .json({
-      status: "success",
-      code: 201,
-      data: {
-        token,
-        user: {
-          email,
-          id: user._id,
-          balance: user.balance,
-          balanceHasBeenSet: user.balanceHasBeenSet,
-        },
-      },
-    });
+  return res.redirect(`https://accounts.google.com/o/oauth2/v2/auth?${params}`);
 };
 
 module.exports = googleLogin;
