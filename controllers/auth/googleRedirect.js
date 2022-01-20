@@ -65,7 +65,7 @@ const googleRedirect = async (req, res) => {
 
   return res
     .redirect(
-      `${process.env.FRONT_URL}/api/users/google-redirect/?access_token=${token}&email=${user.email}&balance=${user.balance}&balanceHasBeenSet=${user.balanceHasBeenSet}`
+      `${process.env.FRONT_URL}/api/users/google-redirect/?access_token=${token}&email=${user.email}`
     )
     .status(201)
     .json({
