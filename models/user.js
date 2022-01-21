@@ -49,9 +49,7 @@ userSchema.methods.comparePassword = function (password) {
 };
 
 const joiUserSchema = Joi.object({
-  email: Joi.string()
-    .required()
-    .email({ minDomainSegments: 7, tlds: { allow: ["com", "net", "uk", "lv", "ru", "by", "org"] } }),
+  email: Joi.string().required(),
   password: Joi.string().min(6).required(),
   token: Joi.string(),
 });
@@ -61,8 +59,8 @@ const joiBalanceSchema = Joi.object({
 });
 
 const joiLoginViaGoogleSchema = Joi.object({
-  email: Joi.string().required()
-})
+  email: Joi.string().required(),
+});
 
 const User = model("user", userSchema);
 
@@ -71,5 +69,5 @@ module.exports = {
   joiUserSchema,
   joiBalanceSchema,
   userSchema,
-  joiLoginViaGoogleSchema
+  joiLoginViaGoogleSchema,
 };
