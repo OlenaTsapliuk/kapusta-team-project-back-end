@@ -12,9 +12,10 @@ const {
   setBalance,
   googleLogin,
   googleRedirect,
+  loginViaGoogle
 } = require("../../controllers/auth");
 
-const { joiUserSchema, joiBalanceSchema } = require("../../models/user");
+const { joiUserSchema, joiBalanceSchema, joiLoginViaGoogleSchema } = require("../../models/user");
 const router = express.Router();
 
 router.post("/signup", validation(joiUserSchema), controllerWrapper(signup));
@@ -29,5 +30,6 @@ router.post(
 );
 router.get("/google", controllerWrapper(googleLogin));
 router.get("/google-redirect", controllerWrapper(googleRedirect));
+router.get("/login-via-google", validation(joiLoginViaGoogleSchema), controllerWrapper(loginViaGoogle))
 
 module.exports = router;
