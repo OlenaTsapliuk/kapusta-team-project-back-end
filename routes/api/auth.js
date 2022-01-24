@@ -21,6 +21,7 @@ const router = express.Router();
 router.post("/signup", validation(joiUserSchema), controllerWrapper(signup));
 router.post("/signin", validation(joiUserSchema), controllerWrapper(signin));
 router.post("/logout", authenticate, controllerWrapper(logout));
+router.post("/login-via-google", validation(joiLoginViaGoogleSchema), controllerWrapper(loginViaGoogle));
 
 router.post(
   "/setBalance",
@@ -30,6 +31,6 @@ router.post(
 );
 router.get("/google", controllerWrapper(googleLogin));
 router.get("/google-redirect", controllerWrapper(googleRedirect));
-router.get("/login-via-google", validation(joiLoginViaGoogleSchema), controllerWrapper(loginViaGoogle))
+
 
 module.exports = router;
