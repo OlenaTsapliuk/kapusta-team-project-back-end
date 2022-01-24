@@ -30,7 +30,7 @@ const userSchema = Schema(
 
     balance: {
       type: Number,
-      default: 0,
+      default: undefined,
     },
     balanceHasBeenSet: {
       type: Boolean,
