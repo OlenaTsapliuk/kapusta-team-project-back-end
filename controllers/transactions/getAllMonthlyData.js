@@ -20,12 +20,6 @@ const getAllMonthlyData = async (req, res) => {
         }
     })
 
-    const allIncomeTransactions = currentMonthTransactions.filter(t => t.income)
-    const allExpenseTransactions = currentMonthTransactions.filter(t => !t.income)
-
-    const allIncomes = allIncomeTransactions.reduce((acc, transaction) => acc + transaction.sum, 0)
-    const allExpenses = allExpenseTransactions.reduce((acc, transaction) => acc + transaction.sum, 0)
-
     const userCategories = await Category.find({ owner: _id })
     const basicCategories = await Category.find({ basicCategory: true })
     const allCategories = [...userCategories, ...basicCategories]
@@ -61,7 +55,7 @@ const getAllMonthlyData = async (req, res) => {
             }
         })
     
-        allIncomeTransactions.forEach(transaction => {
+        currentMonthTransactions.filter(t => t.income).forEach(transaction => {
             if (transaction.category === cat) {
                 const obj = incomes.find(c => c.category === cat)
                 obj.totalSum = Number((obj.totalSum + transaction.sum).toFixed(2))
@@ -99,7 +93,7 @@ const getAllMonthlyData = async (req, res) => {
             }
         })
 
-        allExpenseTransactions.forEach(transaction => {
+        currentMonthTransactions.filter(t => !t.income).forEach(transaction => {
             if (transaction.category === cat) {
                 const obj = expenses.find(c => c.category === cat)
                 obj.totalSum = Number((obj.totalSum + transaction.sum).toFixed(2))
@@ -114,11 +108,11 @@ const getAllMonthlyData = async (req, res) => {
                 isNameInList.transactionTotalSum = Number((isNameInList.transactionTotalSum + transaction.sum).toFixed(2))
                 }
         })
-})
+    })
 
     const result = {
-        allIncomes: Number(allIncomes.toFixed(2)),
-        allExpenses: Number(allIncomes.toFixed(2)),
+        allIncomes: Number(currentMonthTransactions.filter(t => t.income).reduce((acc, transaction) => acc + transaction.sum, 0).toFixed(2)),
+        allExpenses: Number(currentMonthTransactions.filter(t => !t.income).reduce((acc, transaction) => acc + transaction.sum, 0).toFixed(2)),
         incomes,
         expenses
     }
